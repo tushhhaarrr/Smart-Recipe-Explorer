@@ -1,19 +1,24 @@
 from pydantic import BaseModel
-from typing import List
+from typing import List, Optional
 
+class RecipeCreate(BaseModel):
+    name: str
+    cuisine: str
+    isVegetarian: bool
+    prepTimeMinutes: int
+    ingredients: List[str]
+    difficulty: str
+    instructions: str
+    tags: List[str]
+    description: str
 
-class SmartRecipieCreate(BaseModel):
-    name:str
-    cuisine:str
-    isVegiterian:bool
-    prepTimneMinutes:int
-    ingredients:List[str]
-    difficulty:str
-    instruction:str
-    tags:List[str]
+class RecipeResponse(RecipeCreate):
+    id: int
 
-class RecipieResponse((SmartRecipieCreate)):
-    id:str
     class Config:
-        orm_mode=True
+        from_attributes = True
+
+class RecipeSearch(BaseModel):
+    name: Optional[str] = None
+    ingredients: Optional[List[str]] = None
         
