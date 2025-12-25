@@ -154,5 +154,3 @@ You can view the interactive **Swagger UI** at `http://127.0.0.1:8000/docs`.
 
 ---
 
-## 📝 License
-This project is open-source and available under the MIT License.
