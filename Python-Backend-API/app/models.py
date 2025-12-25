@@ -1,7 +1,7 @@
 import uuid
 from sqlalchemy import Column,Integer,String,Boolean,ARRAY
 from app.database import Base
-
+from datetime import datetime
 class Recipe(Base):
     __tablename__="recipes"
 

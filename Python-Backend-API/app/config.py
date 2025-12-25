@@ -1,7 +1,7 @@
-from pydantic import BaseSettings
+from pydantic_settings import BaseSettings
 
 class Settings(BaseSettings):
-  Databse_url:str
+  Database_url:str
   Gemini_Api_Key:str
 
   class Config:

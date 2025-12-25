@@ -11,20 +11,20 @@ from app.schemas import SmartRecipieCreate,RecipieResponse
 router=APIRouter()
 
 
-@router.post("/",response_model=RecipieResponse)
+@router.post("/recipes",response_model=RecipieResponse)
 def create_recipe(recipe:SmartRecipieCreate,db:Session=Depends(get_db)):
-    new_recipe=Recipe(**Recipe.dic())
+    new_recipe=Recipe(**Recipe.dict())
     db.add(new_recipe)
     db.commit()
     db.refresh(new_recipe)
     return new_recipe
 
-@router.get("/",response_model=List[RecipieResponse])
+@router.get("/recipes",response_model=List[RecipieResponse])
 def get_all_recipes(db:Session=Depends(get_db)):
     return db.query(Recipe).all()
 
 
-@router.get("/{recipe_id}",response_model=RecipieResponse)
+@router.get("/recipes/{recipe_id}",response_model=RecipieResponse)
 def get_recipe(recipe_id:str,db:Session=Depends(get_db)):
     recipe=db.query(Recipe).filter(Recipe.id==recipe_id).first()
     if not recipe:
