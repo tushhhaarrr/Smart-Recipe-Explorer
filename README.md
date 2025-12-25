@@ -21,12 +21,12 @@ The project follows a modular 3-layer architecture to ensure scalability and mai
 
 ```mermaid
 graph TD
-    Client[Frontend / API Client] -->|HTTP Request| API[API Layer (app/api)]
-    API -->|Validation| Schema[Pydantic Schemas]
-    API -->|Business Logic| GenAI[GenAI Service (app/genai)]
-    API -->|Data Access| DB[Database Layer (app/database)]
-    GenAI -->|External API| Gemini[Google Gemini API]
-    DB -->|SQL| Postgres[(PostgreSQL)]
+    Client["Frontend / API Client"] -->|"HTTP Request"| API["API Layer (app/api)"]
+    API -->|"Validation"| Schema["Pydantic Schemas"]
+    API -->|"Business Logic"| GenAI["GenAI Service (app/genai)"]
+    API -->|"Data Access"| DB["Database Layer (app/database)"]
+    GenAI -->|"External API"| Gemini["Google Gemini API"]
+    DB -->|"SQL"| Postgres[("PostgreSQL")]
 ```
 
 ### 📂 Folder Structure
