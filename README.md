@@ -149,7 +149,7 @@ You can view the interactive **Swagger UI** at `http://127.0.0.1:8000/docs`.
 - **Database**: PostgreSQL
 - **ORM**: SQLAlchemy
 - **Validation**: Pydantic V2
-- **AI Model**: Google Gemini 1.5 Flash
+- **AI Model**: Google Gemini 2.5 Flash
 - **Server**: Uvicorn
 
 ---
