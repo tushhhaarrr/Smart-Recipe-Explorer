@@ -5,6 +5,7 @@ from sqlalchemy.exc import IntegrityError
 from app.database.connection import get_db
 from app.database.models import Recipe
 from app.schemas import RecipeCreate, RecipeResponse
+from sqlalchemy import or_
 
 router = APIRouter()
 
@@ -52,15 +53,34 @@ def get_all_recipes(db: Session = Depends(get_db)):
 def search_recipes(
     name: Optional[str] = Query(None),
     ingredients: Optional[List[str]] = Query(None),
+    cuisine: Optional[str] = Query(None),
+    isVegetarian: bool | None=Query(default=None),
+    prepTimeMinutes:Optional[int]=Query(default=None,description="Max Preparation Time in minutes"),
+    tags:Optional[str]=Query(None),
+    ingredient:Optional[str]=Query(None),
     db: Session = Depends(get_db)
 ):
     query = db.query(Recipe)
     
-    # user provided a name it fikter by it
+    # user provided a name it filter by it
+    if prepTimeMinutes is not None:
+        query=query.filter(or_(Recipe.prepTimeMinutes == prepTimeMinutes,
+                                Recipe.prepTimeMinutes <= prepTimeMinutes))
+    # else:
+    #     query=query.filter(Recipe.prepTimeMinutes<=prepTimeMinutes)
     if name:
         query = query.filter(Recipe.name.ilike(f"%{name}%"))
     if ingredients:
         query = query.filter(Recipe.ingredients.contains(ingredients))
+    if cuisine:
+        query=query.filter(Recipe.cuisine.contains(cuisine))
+    if isVegetarian:
+        query=query.filter(Recipe.isVegetarian==isVegetarian)
+    if tags:
+        query=query.filter(Recipe.tags.contains(tags))
+    if ingredient:
+        query=query.filter(Recipe.ingredient.contains(ingredient))
+    
     return query.all()
 
 
