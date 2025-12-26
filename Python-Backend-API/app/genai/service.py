@@ -10,7 +10,7 @@ genai.configure(api_key=os.getenv("Gemini_Api_Key"))
 
 # Initialize the model once
 # Using the stable 'flash' model for speed and efficiency
-model = genai.GenerativeModel("gemini-1.5-flash")
+model = genai.GenerativeModel("gemini-2.5-flash")
 
 def generate_recipe_suggestion(ingredients: list[str]) -> str:
     """
