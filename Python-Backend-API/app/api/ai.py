@@ -4,6 +4,7 @@ from sqlalchemy.orm import Session
 from app.database.connection import get_db
 from app.database.models import AISuggestion
 from app.genai import service 
+from app.schemas import SimplifyRequest 
 
 # router for ai
 router = APIRouter()
@@ -54,14 +55,14 @@ def suggest_recipe(ingredients: List[str], db: Session = Depends(get_db)):
 
 # API to Simplify Complex Instructions
 @router.post("/ai/simplify")
-def simplify_recipe(instructions: str):
+def simplify_recipe(request_body: SimplifyRequest):
     """
     This function takes hard/long recipe instructions and asks AI 
     to rewrite them in a simple way for beginners.
     """
     
     try:
-        simplified_text = service.generate_simplification(instructions)
+        simplified_text = service.generate_simplification(request_body.instructions)
         
       
         return {"simplified_instructions": simplified_text}

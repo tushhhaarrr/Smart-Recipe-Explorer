@@ -21,4 +21,6 @@ class RecipeResponse(RecipeCreate):
 class RecipeSearch(BaseModel):
     name: Optional[str] = None
     ingredients: Optional[List[str]] = None
-        
+
+class SimplifyRequest(BaseModel):
+    instructions: str

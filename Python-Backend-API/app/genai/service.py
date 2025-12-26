@@ -4,12 +4,8 @@ from dotenv import load_dotenv
 
 # Load environment variables
 load_dotenv()
-
-# Configure the API key
 genai.configure(api_key=os.getenv("Gemini_Api_Key"))
 
-# Initialize the model once
-# Using the stable 'flash' model for speed and efficiency
 model = genai.GenerativeModel("gemini-2.5-flash")
 
 def generate_recipe_suggestion(ingredients: list[str]) -> str:
@@ -23,7 +19,6 @@ def generate_recipe_suggestion(ingredients: list[str]) -> str:
         response = model.generate_content(prompt)
         return response.text
     except Exception as e:
-        # Re-raise the exception to be handled by the caller/controller
         raise Exception(f"GenAI Error: {str(e)}")
 
 def generate_simplification(instructions: str) -> str:

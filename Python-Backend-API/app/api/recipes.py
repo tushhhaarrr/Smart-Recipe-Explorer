@@ -4,7 +4,7 @@ from typing import List, Optional
 from sqlalchemy.exc import IntegrityError
 from app.database.connection import get_db
 from app.database.models import Recipe
-from app.schemas import RecipeCreate, RecipeResponse, RecipeSearch
+from app.schemas import RecipeCreate, RecipeResponse
 
 router = APIRouter()
 
@@ -46,22 +46,21 @@ def get_all_recipes(db: Session = Depends(get_db)):
 
 
 
-# API to Search Recipes (Advanced)
-@router.post("/recipes/search", response_model=List[RecipeResponse])
+# API to Search Recipes
+# API to Search Recipes
+@router.get("/recipes/search", response_model=List[RecipeResponse])
 def search_recipes(
-    search_params: RecipeSearch,
+    name: Optional[str] = Query(None),
+    ingredients: Optional[List[str]] = Query(None),
     db: Session = Depends(get_db)
 ):
     query = db.query(Recipe)
     
     # user provided a name it fikter by it
-    if search_params.name:
-        # making caseInsensitive
-        query = query.filter(Recipe.name.ilike(f"%{search_params.name}%"))
-    #user ingredient checking
-    if search_params.ingredients:
-        # This checks if the recipe contains ALL the ingredients in the list
-        query = query.filter(Recipe.ingredients.contains(search_params.ingredients))
+    if name:
+        query = query.filter(Recipe.name.ilike(f"%{name}%"))
+    if ingredients:
+        query = query.filter(Recipe.ingredients.contains(ingredients))
     return query.all()
 
 
