@@ -1,7 +1,5 @@
 print("=== api.main LOADED ===")
 
-from fastapi import FastAPI
+from app.main import app
 
-app = FastAPI()
-
-print("=== app CREATED ===")
+print("=== app IMPORTED ===")
