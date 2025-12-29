@@ -4,11 +4,21 @@ import os
 
 Base = declarative_base()
 
+_engine = None
+
 def get_engine():
-    database_url = os.environ.get("DATABASE_URL")
-    if not database_url:
-        raise RuntimeError("DATABASE_URL is not set")
-    return create_engine(database_url, pool_pre_ping=True)
+    global _engine
+    if _engine is None:
+        database_url = os.environ.get("DATABASE_URL")
+        if not database_url:
+            raise RuntimeError("DATABASE_URL not set")
+
+        _engine = create_engine(
+            database_url,
+            pool_pre_ping=True,
+            connect_args={"sslmode": "require"}
+        )
+    return _engine
 
 SessionLocal = sessionmaker(autocommit=False, autoflush=False)
 
