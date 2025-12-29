@@ -79,7 +79,7 @@ def search_recipes(
     if tags:
         query=query.filter(Recipe.tags.contains(tags))
     if ingredient:
-        query=query.filter(Recipe.ingredient.contains(ingredient))
+        query=query.filter(Recipe.ingredients.contains([ingredient]))
     
     return query.all()
 
