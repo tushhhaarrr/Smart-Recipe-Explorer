@@ -1,11 +1,7 @@
-import google.generativeai as genai
+from google import genai
 import os
-from dotenv import load_dotenv
 
-# Load environment variables
-load_dotenv()
-genai.configure(api_key=os.getenv("Gemini_Api_Key"))
-model = genai.GenerativeModel("gemini-2.5-flash")
+client = genai.Client(api_key=os.getenv("Gemini_Api_Key"))
 
 def generate_recipe_suggestion(ingredients: list[str]) -> str:
     """
@@ -15,7 +11,10 @@ def generate_recipe_suggestion(ingredients: list[str]) -> str:
     prompt = f"Suggest a simple recipe using these ingredients: {ingredients_str}. Give short steps."
     
     try:
-        response = model.generate_content(prompt)
+        response = client.models.generate_content(
+            model="gemini-1.5-flash",
+            contents=prompt
+        )
         return response.text
     except Exception as e:
         raise Exception(f"GenAI Error: {str(e)}")
@@ -33,7 +32,10 @@ Stay strictly within the food domain at all times.
     """
     
     try:
-        response = model.generate_content(prompt)
+        response = client.models.generate_content(
+            model="gemini-1.5-flash",
+            contents=prompt
+        )
         return response.text
     except Exception as e:
         raise Exception(f"GenAI Error: {str(e)}")
